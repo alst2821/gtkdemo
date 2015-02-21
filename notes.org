@@ -22,3 +22,23 @@ Mapping RGB Triples Onto 16 Distinct Value
 |      |      |      |     |
 
 from graphics gems II
+
+struct test_color cc[] = {
+  {    1 ,    0 ,   0 },
+  {    1 ,    1 ,   0 },  
+  {    0 ,    1 ,   1 },
+  {    0 ,    0 ,   1 },
+  };
+
+algorithm to fill in colormap
+
+1. subdivide
+| base pos | colormap pos | index |
+|        0 |            0 |       |
+|        1 |        19.75 |       |
+|        2 |         39.5 |       |
+|        3 |           79 |       |
+
+given an index, find the range and interpolate
+
+

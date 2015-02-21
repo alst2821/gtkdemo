@@ -1,7 +1,9 @@
 import math
 basecount = 4
-
 cmapcount = 80
+
+
+
 
 def interpolate(g):
     top = math.ceil(g*(basecount - 1))

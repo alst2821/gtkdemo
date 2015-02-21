@@ -1,42 +1,22 @@
 #include <gtk/gtk.h>
+#include <math.h>
+#include <assert.h>
+#include "color.h"
 
 static GtkWidget *window = NULL;
 /* Pixmap for scribble area, to store current scribbles */
 static cairo_surface_t *surface = NULL;
-
-struct test_color
-{
-  float r,g,b;
-};
-
-struct test_color cc[] = {
-  {    0 ,    0 ,   0 },
-  {  0.5 ,  0.5 ,   0 },
-  {  0.5 ,    0 ,  .5 },
-  {    1 ,    0 ,   0 },
-  {    0 ,  0.5 ,  .5 },
-  {    0 ,    1 ,   0 },
-  {    0 ,    0 ,   1 },
-  { 0.33 , 0.33 , .33 },
-  { 0.66 , 0.66 , .66 },
-  {    1 ,    1 ,   0 },
-  {    1 ,    0 ,   1 },
-  {    1 ,  0.5 ,  .5 },
-  {    0 ,    1 ,   1 },
-  {   .5 ,    1 ,  .5 },
-  {   .5 ,  0.5 ,   1 },
-  {    1 ,    1 ,   1 }
-  };
 
 static gboolean
 checkerboard_draw (GtkWidget *da,
                    cairo_t   *cr,
                    gpointer   data)
 {
-  gint i, j, xcount, width, height;
-  gint colour_count = sizeof(cc)/sizeof(cc[0]);
+  gint j, xcount, width, height;
+  gint colour_count = CMAPENTRIES;
+
 #define CHECK_SIZE 10
-#define SPACING 2
+#define SPACING 0
 
   /* At the start of a draw handler, a clip region has been set on
    * the Cairo context, and the contents have been cleared to the
@@ -48,34 +28,25 @@ checkerboard_draw (GtkWidget *da,
   xcount = 0;
   width = gtk_widget_get_allocated_width (da);
   height = gtk_widget_get_allocated_height (da);
-  i = SPACING;
-  while (i < width)
-    {
-      j = SPACING;
-      while (j < height)
-        {
-          cairo_set_source_rgb (cr, cc[xcount].r, cc[xcount].g, cc[xcount].b);
+  j = SPACING;
+  while (j < height)
+  {
+      cairo_set_source_rgb (
+          cr,
+          colormap[xcount].r,
+          colormap[xcount].g,
+          colormap[xcount].b);
 
-          /* If we're outside the clip, this will do nothing.
-           */
-          cairo_rectangle (cr, i, j, CHECK_SIZE, CHECK_SIZE);
-          cairo_fill (cr);
-
-          j += CHECK_SIZE + SPACING;
-          ++xcount;
-          if (xcount > colour_count)
-            xcount = 0;
-        }
-
-      i += CHECK_SIZE + SPACING;
+      /* If we're outside the clip, this will do nothing.
+       */
+      cairo_rectangle (cr, 0, j, width, CHECK_SIZE);
+      cairo_fill (cr);
+          
+      j += CHECK_SIZE + SPACING;
       ++xcount;
-      if (xcount > colour_count)
-        xcount = 0;
-    }
-
-  /* return TRUE because we've handled this event, so no
-   * further processing is required.
-   */
+      if (xcount >= colour_count)
+          xcount = 0;
+  }
   return TRUE;
 }
 
@@ -150,7 +121,9 @@ main (int   argc,
 {
   /* GtkWidget is the storage type for widgets */
   GtkWidget *window;
-
+  
+  build_colormap (colormap, CMAPENTRIES);
+  
   /* This is called in all GTK applications. Arguments are parsed
    * from the command line and are returned to the application.
    */
