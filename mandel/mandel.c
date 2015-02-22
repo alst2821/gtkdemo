@@ -33,10 +33,10 @@ void
 set_color (cairo_t *cr,
            int x, int y, int w, int h)
 {
-    double minx = -1.0;
-    double maxx = 1.0;
-    double miny = -1.0;
-    double maxy = 1.0;
+    double minx = -1.5;
+    double maxx = 0.1;
+    double miny = -0.5;
+    double maxy = .5;
     double xx, yy;
     xx = minx + (maxx-minx) * ((float)x/w);
     yy = miny+ (maxy - miny) * ((float)y/h);
