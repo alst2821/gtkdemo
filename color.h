@@ -1,5 +1,6 @@
+#ifdef _COLOR_H_
 
-struct test_color
+struct rgb_color
 {
   float r,g,b;
 };
@@ -10,12 +11,13 @@ struct test_color
 #define CMAPENTRIES 80
 
 
-extern struct test_color colormap[CMAPENTRIES];
+extern struct rgb_color colormap[CMAPENTRIES];
 void
-build_colormap (struct test_color *colormap,
+build_colormap (struct rgb_color *colormap,
                 int colormaplen);
 
 int
 interpolate (int element,
              int elem_count,
-             struct test_color *output);
+             struct rgb_color *output);
+#endif

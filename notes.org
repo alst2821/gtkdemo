@@ -23,7 +23,7 @@ Mapping RGB Triples Onto 16 Distinct Value
 
 from graphics gems II
 
-struct test_color cc[] = {
+struct rgb_color cc[] = {
   {    1 ,    0 ,   0 },
   {    1 ,    1 ,   0 },  
   {    0 ,    1 ,   1 },

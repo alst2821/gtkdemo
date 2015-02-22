@@ -4,14 +4,14 @@
 
 #include "color.h"
 
-struct test_color cc[] = {
+struct rgb_color cc[] = {
   {    1 ,    0 ,   0 },
   {    1 ,    1 ,   0 },  
   {    0 ,    1 ,   1 },
   {    0 ,    0 ,   1 },
   };
 
-struct test_color colormap[CMAPENTRIES];
+struct rgb_color colormap[CMAPENTRIES];
 
 #ifdef COLOR
 int
@@ -22,7 +22,7 @@ main (int   argc,
     build_colormap (colormap, CMAPENTRIES);
     /* for (i = 0; i < CMAPENTRIES; i++) */
     /* { */
-    /*     struct test_color *c = &colormap[i]; */
+    /*     struct rgb_color *c = &colormap[i]; */
     /* } */
     return 0;
 }
@@ -36,7 +36,7 @@ main (int   argc,
 int
 interpolate (int element,
              int elem_count,
-             struct test_color *output)
+             struct rgb_color *output)
 {
     int top, bottom;
     float delta;
@@ -52,12 +52,12 @@ interpolate (int element,
     bottom = (int) floorf(x*maxindex);
     delta = x * maxindex - bottom;
 
-    struct test_color *tt = &cc[(int)top];
-    struct test_color *bb = &cc[(int)bottom];
+    struct rgb_color *tt = &cc[(int)top];
+    struct rgb_color *bb = &cc[(int)bottom];
     output->r = bb->r + (tt->r - bb->r) * delta;
     output->g = bb->g + (tt->g - bb->g) * delta;
     output->b = bb->b + (tt->b - bb->b) * delta;
-
+#ifdef DEBUG_INTERPOLATION
     printf("delta %f "
            "top %f %f %f, "
            "bottom %f %f %f, "
@@ -67,12 +67,12 @@ interpolate (int element,
            bb->r, bb->g, bb->b,
            output->r, output->g, output->b
         );
-    
+#endif   
     return OKAY;
 }
 
 void
-build_colormap (struct test_color *colormap,
+build_colormap (struct rgb_color *colormap,
                 int colormaplen)
 {
     int i;
