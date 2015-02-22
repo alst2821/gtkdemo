@@ -1,0 +1,16 @@
+color.o
+complex.c~
+complex/complex
+complex/complex.c~
+complex/complex.o
+complex1/Makefile~
+complex1/complex1
+complex1/complex1.c~
+complex1/complex1.o
+mandel/color.o
+mandel/mandel
+mandel/mandel.o
+test
+test.o
+.gitignore~
+
